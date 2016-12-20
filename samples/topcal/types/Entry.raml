@@ -1,0 +1,15 @@
+type: object
+properties:
+    id:
+        type: string
+        required: true
+    date:
+        type: date-only
+        required: true
+    time:
+        type: time-only
+        required: true
+    calories:
+        type: number
+        minimum: 0
+        required: true

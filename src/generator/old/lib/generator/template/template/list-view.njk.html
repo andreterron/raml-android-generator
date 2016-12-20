@@ -1,0 +1,15 @@
+<div class="panel-heading nav">
+    <ul class="nav nav-pills pull-left">
+        <li><a href="">{$ name $}</a></li>
+    </ul>
+    <ul class="nav nav-pills pull-right">
+        <li><a class="pull-right" href="#/{$ id $}/create">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a></li>
+    </ul>
+</div>
+<div class="list-group">
+    <a class="list-group-item" href="#/{$ id $}/{{item.id}}/edit" ng-repeat="item in zplItems">
+        {{ item.name }}
+    </a>
+</div>

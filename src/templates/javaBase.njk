@@ -1,0 +1,83 @@
+
+{%- macro type(name) -%}
+    {%- if name == 'integer' -%}
+        int
+    {%- elif name == 'int' -%}
+        int
+    {%- elif name == 'string' -%}
+        String
+    {%- elif name == 'null' -%}
+        Void
+    {%- elif name == 'date' -%}
+        Date
+        {%- if imports %}
+        {%- set i = imports.push("java.util.Date") -%}
+        {%- endif -%}
+    {%- elif name[0] == '.' -%}
+        {%- set typeName = (name.split('.') | last) -%}
+        {$ typeName $}{$ importClass(normalizePkg(name, app)) $}
+    {%- else -%}
+        {%- set typeName = (name.split('.') | last) -%}
+        {$ typeName $}{$ importClass(name) if name.indexOf('.') != -1 $}
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- macro normalizePkg(pkg, app) -%}
+    {%- if pkg[0] == '.' -%}
+        {$ app.android.package $}{$ pkg $}
+    {%- else -%}
+        {$ pkg $}
+    {%- endif -%}
+{%- endmacro -%}
+
+{% macro wrapImports(app, pkg) %}
+
+    {%- if pkg -%}
+package {$ normalizePkg(pkg, app) $};
+
+{% endif -%}
+
+    {%- set imports = [] %}
+    {%- set content = caller() -%}
+
+    {%- block import %}{% endblock -%}
+{%- for v in imports | sort(false, true) -%}
+import {$ v $};
+{% endfor -%}
+{$ caller() $}
+{%- endmacro %}
+
+{%- macro package(pkg) -%}
+{%- endmacro -%}
+
+{%- macro importClass(className) -%}
+    {%- if imports -%}
+        {%- if className[0] == '.' -%}
+            {$ importClass(normalizePkg(className, app)) $}
+        {%- else -%}
+            {%- if imports.indexOf(className.toString()) == -1 -%}
+                {%- set a = imports.push(className.toString()) -%}
+            {%- endif -%}
+        {%- endif -%}
+    {%- endif -%}
+{%- endmacro -%}
+
+{%- macro class(name) -%}
+    {$ name | camelCaseCapital $}
+{%- endmacro %}
+
+{%- macro file(type, name, privacy="public") -%}
+
+    {%- set imports = [] %}
+    {%- set content = caller() -%}
+
+    {%- block import %}{% endblock -%}
+    {%- for v in imports %}
+import {$ v $};
+    {%- endfor %}
+
+{$ privacy $} {$ type $} {$ name $} { {%- set i = 0 -%}
+{$ caller() $}
+{%- set i = 0  -%}
+}
+{%- endmacro -%}

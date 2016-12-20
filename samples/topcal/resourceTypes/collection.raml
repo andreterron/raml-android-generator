@@ -1,0 +1,23 @@
+description: Collection of available <<resourcePathName>> in Jukebox.
+get:
+    description: Get a list of <<resourcePathName>>.
+    responses:
+        200:
+            body:
+                application/json:
+                    schema: <<resourcePathName>>
+                    example: <<exampleCollection>>
+post:
+    description: |
+        Create a new <<resourcePathName|!singularize>>.
+    body:
+        application/json:
+            schema: <<resourcePathName|!singularize>>
+            example: <<exampleCreate>>
+    responses:
+        200:
+            body:
+                application/json:
+                    schema: <<resourcePathName|!singularize>>
+                    example: |
+                        { "message": "The <<resourcePathName|!singularize>> has been properly entered" }

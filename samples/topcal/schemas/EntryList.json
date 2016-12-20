@@ -1,0 +1,36 @@
+{
+    "type": "array",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "required": true,
+    "items": {
+        "type": "object",
+        "id": "http://www.topcal.co/api/v1/schema/entry",
+        "properties": {
+            "id": {
+                "type": "string",
+                "required": false
+            },
+            "title": {
+                "type": "string",
+                "required": true
+            },
+            "date": {
+                "type": "string",
+                "required": true
+            },
+            "time": {
+                "type": "string",
+                "required": true
+            },
+            "calories": {
+                "type": "number",
+                "minimum": 0,
+                "required": true
+            },
+            "ownerId": {
+                "type": "string",
+                "required": false
+            }
+        }
+    }
+}

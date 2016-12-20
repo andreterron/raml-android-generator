@@ -1,0 +1,29 @@
+<div class="panel-heading nav">
+    <ul class="nav nav-pills pull-left">
+        <li><a href="" ng-click="back()" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></li>
+    </ul>
+    <ul class="nav nav-pills pull-right">
+        <li ng-hide="hideDelete"><a href="" ng-click="delete()"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></li>
+        <li><a href="" ng-click="save()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></li>
+    </ul>
+</div>
+<div class="list-group">
+
+{%- for fname, field in fields %}
+    {%- if field.type == "string" %}
+    <div class="list-group-item">
+        {$ fname $}: <input type="text" ng-model="obj.{$ fname $}"/>
+    </div>
+    {%- endif %}
+    {%- if field.type == "boolean" %}
+    <div class="list-group-item">
+        {$ fname $}: <input type="checkbox" ng-model="obj.{$ fname $}"/>
+    </div>
+    {%- endif %}
+    {%- if field.type == "int" %}
+    <div class="list-group-item">
+        {$ fname $}: <input type="number" ng-model="obj.{$ fname $}"/>
+    </div>
+    {%- endif %}
+{%- endfor %}
+</div>

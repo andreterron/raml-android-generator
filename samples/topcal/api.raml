@@ -1,0 +1,124 @@
+#%RAML 0.8
+title: TopCal
+baseUri: http://localhost:8080/api/v1
+
+schemas:
+    - user: !include schemas/User.json
+    - entry: !include schemas/Entry.json
+    - users: !include schemas/UserList.json
+    - entries: !include schemas/EntryList.json
+    - auth: !include schemas/Auth.json
+    - token: !include schemas/Token.json
+
+resourceTypes:
+    - collection: !include resourceTypes/collection.raml
+    - collection-item: !include resourceTypes/collection-item.raml
+
+securedBy: [token]
+securitySchemes:
+    - token:
+        type: x-authentication-token
+        describedBy:
+            headers:
+                Authorization:
+                    description: |
+                        Token received upon login or signup
+                    type: string
+
+/users:
+    type:
+        collection:
+            exampleCollection: !include examples/user-collection.json
+            exampleCreate: !include examples/user-creation.json
+    /logout:
+        post:
+            description: |
+                Logs out the current user
+    /login:
+        securedBy: [null]
+        post:
+            description: |
+                Logs in the user, and receive an auth token
+            body:
+                application/json:
+                    schema: auth
+                    example: |
+                        {
+                            "email": "johndoe@topcal.co",
+                            "password": "pf01invsvlash8ahsf"
+                        }
+            responses:
+                200:
+                    body:
+                        application/json:
+                            schema: token
+            #     404:
+            #         body:
+            #             application/json:
+    /signup:
+        securedBy: [null]
+        post:
+            description: |
+                Signs up a new user, and receive an auth token
+            body:
+                application/json:
+                    schema: auth
+                    example: |
+                        {
+                            "email": "johndoe@topcal.co",
+                            "password": "pf01invsvlash8ahsf"
+                        }
+            responses:
+                200:
+                    body:
+                        application/json:
+                            schema: token
+            # description: |
+            #     Updates the <<resourcePathName|!singularize>>
+            #     with <<resourcePathName|!singularize>>Id =
+            #     {<<resourcePathName|!singularize>>Id}
+            # responses:
+            #     200:
+            #         body:
+            #             application/json:
+            #                 example: |
+            #                     <<exampleItem>>
+            #     404:
+            #         body:
+            #             application/json:
+    /{userId}:
+        type:
+            collection-item:
+                exampleItem: !include examples/user.json
+
+/entries:
+    type:
+        collection:
+            exampleCollection: !include examples/entry-collection.json
+            exampleCreate: !include examples/entry-creation.json
+    get:
+        queryParameters:
+            userId:
+                displayName: User ID
+                type: string
+                required: false
+            dateFrom:
+                displayName: Date From
+                type: string
+                required: false
+            dateTo:
+                displayName: Date To
+                type: string
+                required: false
+            timeFrom:
+                displayName: Time From
+                type: string
+                required: false
+            timeTo:
+                displayName: Time To
+                type: string
+                required: false
+    /{entryId}:
+        type:
+            collection-item:
+                exampleItem: !include examples/entry.json

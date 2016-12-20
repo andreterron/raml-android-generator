@@ -1,0 +1,47 @@
+description: Entity representing a <<resourcePathName|!singularize>>
+get:
+    description: |
+        Get the <<resourcePathName|!singularize>>
+        with <<resourcePathName|!singularize>>Id =
+        {<<resourcePathName|!singularize>>Id}
+    responses:
+        200:
+            body:
+                application/json:
+                    schema: <<resourcePathName|!singularize>>
+                    example: |
+                        <<exampleItem>>
+        404:
+            body:
+                application/json:
+post:
+    body:
+        application/json:
+            schema: <<resourcePathName|!singularize>>
+            example: |
+                <<exampleItem>>
+    description: |
+        Updates the <<resourcePathName|!singularize>>
+        with <<resourcePathName|!singularize>>Id =
+        {<<resourcePathName|!singularize>>Id}
+    responses:
+        200:
+            body:
+                application/json:
+                    example: |
+                        <<exampleItem>>
+        404:
+            body:
+                application/json:
+delete:
+    description: |
+        Deletes the <<resourcePathName|!singularize>>
+        with <<resourcePathName|!singularize>>Id =
+        {<<resourcePathName|!singularize>>Id}
+    responses:
+        204:
+            description: |
+                Succesfully deleted <<resourcePathName|!singularize>>
+        404:
+            body:
+                application/json:
